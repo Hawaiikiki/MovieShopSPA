@@ -10,11 +10,16 @@ import { MovieComponent } from './public/movie/movie.component';
 import { MovieDetailsComponent } from './public/movie/movie-details.component';
 import { CastDetailsComponent } from './public/cast/cast-details.component';
 import { GenreComponent } from './public/genre/genre.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CastComponent } from './public/cast/cast.component';
+import { AddGenreComponent } from './public/genre/add-genre.component';
+
 
 // tells angular which routing file to use, services to inject, classes to import
 @NgModule({
   declarations: [ // componenets should be declared here 
-    AppComponent, MovieComponent, MovieDetailsComponent, CastDetailsComponent, GenreComponent
+    AppComponent, MovieComponent, MovieDetailsComponent, CastDetailsComponent, GenreComponent, CastComponent, AddGenreComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +27,9 @@ import { GenreComponent } from './public/genre/genre.component';
     CoreModule,
     SharedModule,
     NgbModule,
+    FormsModule,
+    HttpClientModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

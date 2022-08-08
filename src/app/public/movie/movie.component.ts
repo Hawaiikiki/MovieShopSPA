@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MoviesService } from 'src/app/core/services/movies.service';
+import { Movie } from 'src/app/shared/models/Movie';
 
 @Component({
   selector: 'app-movie',
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./movie.component.css']
 })
 export class MovieComponent implements OnInit {
+  movies!: Movie[];//nullable
 
-  constructor() { }
+  constructor(private movieService:MoviesService) { }
 
   ngOnInit(): void {
+    this.movieService.getTopRevenueMovies().subscribe(m=>{
+      this.movies = m;
+      console.log(this.movies); // check if data is loaded properly
+    })
   }
+
+
 
 }

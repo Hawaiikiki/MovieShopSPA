@@ -1,1 +1,23 @@
-<p>genre works!</p>
+<div class="container" style="background-color:white;">
+    <div class="alert alert-primary" role="alert" *ngIf="flag">
+        Genre Deleted Successfully
+    </div>
+    <table class=table>
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">NAME</th>
+            <th scope="col">Options</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let g of genres; index as i">
+                <th scope="row">{{i+1}}</th>
+                <td>{{g.id}}</td>
+                <td>{{g.name}}</td>
+                <td><input type="button" class="btn btn-link" value="Add" [routerLink]="'/Add-Genre'">
+                <input type="button" class="btn btn-link" value="Delete">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
