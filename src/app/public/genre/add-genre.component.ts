@@ -11,7 +11,7 @@ export class AddGenreComponent implements OnInit {
   name!:string;
   tnc: boolean = false; // terms and condition
   flag:boolean = false; // check if addition was successful
-  genre:Genre = {id:0,name:''}; // whenever hosting data to database, we should never set primary key manually just leave it 0 or undefined
+  genre:Genre = {id:0,name:'',movies:[]}; // whenever hosting data to database, we should never set primary key manually just leave it 0 or undefined
   constructor() { } 
 
 

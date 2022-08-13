@@ -1,1 +1,29 @@
-<p>login works!</p>
+<div class="container" style="background-color:white">
+    <div class="alert alert-primary" role="alert" *ngIf="flag">
+        Login Successful
+    </div>
+    <div class="d-flex justify-content-left">
+        <form #loginUserForm="ngForm" (submit)="loginUser(loginUserForm)">
+            <div class="form-group">
+                <label for="email">Enter email</label>
+                <input type="text" [(ngModel)]="email" name="email" class="form-control-inline" style="margin:12px;" placeholder="Enter your email" required>
+                <span class="text-danger" *ngIf="(loginUserForm.controls['email'].touched)&&loginUserForm.controls['email'].errors?.['required']">
+                    Email is Required
+                </span>
+                <span clas="text-danger" *ngIf="(loginUserForm.controls['email'].touched)&&loginUserForm.controls['email'].errors?.['email']">
+                    Please Enter a Valid Email
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="password">Enter password</label>
+                <input type="text" [(ngModel)]="password" name="password" class="form-control-inline" style="margin:12px;" placeholder="" required>
+                <span class="text-danger" *ngIf="(loginUserForm.controls['password'].touched)&&loginUserForm.controls['password'].errors?.['required']">
+                    Please Enter Your Password
+                </span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login User" style="margin-top:16px;" [disabled]="!loginUserForm.valid"/>
+            </div>
+        </form>
+    </div>
+</div>

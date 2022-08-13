@@ -11,9 +11,12 @@ import { MovieDetailsComponent } from './public/movie/movie-details.component';
 import { CastDetailsComponent } from './public/cast/cast-details.component';
 import { GenreComponent } from './public/genre/genre.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CastComponent } from './public/cast/cast.component';
 import { AddGenreComponent } from './public/genre/add-genre.component';
+import { JwtAdderInterceptor } from './core/Interceptors/jwt-adder.interceptor';
+import { AuthGuard } from './core/Guards/auth.guard';
+import { AdminGuard } from './core/Guards/admin.guard';
 
 
 // tells angular which routing file to use, services to inject, classes to import
@@ -29,9 +32,11 @@ import { AddGenreComponent } from './public/genre/add-genre.component';
     NgbModule,
     FormsModule,
     HttpClientModule
-
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:JwtAdderInterceptor, multi:true} // tells it provides multiple values to single request (multiple possible returns in jwtAdderInterceptor)
+    ,AuthGuard,AdminGuard
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

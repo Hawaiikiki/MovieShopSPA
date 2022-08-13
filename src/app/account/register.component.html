@@ -2,6 +2,12 @@
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card">
+                <span class="text-danger" role="alert" *ngIf="!flag&&submitted">
+                    You failed to register, please check credentials
+                </span>
+                <span class="alert alert-primary" role="alert" *ngIf="flag&&submitted">
+                    You registered successfully
+                </span>
                 <div class="card-header">
                     <h3>Angular Reactive Register Form</h3>
                 </div>
@@ -10,29 +16,56 @@
                         <div class="form-group">
                             <label>First Name</label>
                             <input type="text" class="form-control" formControlName="firstName">
+                            <span class="text-danger" *ngIf="(registerForm.controls['firstName'].touched || submitted)&&registerForm.controls['firstName'].errors?.['required']">
+                                First name is Required
+                            </span>
                         </div>
                         <div class="form-group">
                             <label>Last Name</label>
                             <input type="text" class="form-control" formControlName="lastName">
+                            <span class="text-danger" *ngIf="(registerForm.controls['lastName'].touched || submitted)&&registerForm.controls['lastName'].errors?.['required']">
+                                Last name is Required
+                            </span>
                         </div>
                         <div class="form-group">
                             <label>Email</label>
                             <input type="email" class="form-control" formControlName="email">
+                            <span class="text-danger" *ngIf="(registerForm.controls['email'].touched || submitted)&&registerForm.controls['email'].errors?.['required']">
+                                Email is Required
+                            </span>
+                            <span class="text-danger" *ngIf="(registerForm.controls['email'].touched || submitted)&&registerForm.controls['email'].errors?.['email']">
+                                Please Enter a Valid Email
+                            </span>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
                             <input type="password" class="form-control" formControlName="password">
+                            <span class="text-danger" *ngIf="(registerForm.controls['password'].touched || submitted)&&registerForm.controls['password'].errors?.['required']">
+                                Password is Required
+                            </span>
+                            <span class="text-danger" *ngIf="(registerForm.controls['password'].touched || submitted)&&registerForm.controls['password'].errors?.['invalidPassword']">
+                                Password should have minimum 8 characters, 1 lowercase, 1 uppercase, 1 number
+                            </span>
                         </div>
                         <div class="form-group">
                             <label>Confirm Password</label>
                             <input type="password" class="form-control" formControlName="confirmPassword">
+                            <span class="text-danger" *ngIf="(registerForm.controls['confirmPassword'].touched || submitted)&&registerForm.controls['confirmPassword'].errors?.['required']">
+                                Need to confirm password
+                            </span>
+                            <span class="text-danger" *ngIf="(registerForm.controls['confirmPassword'].touched || submitted)&&registerForm.controls['confirmPassword'].errors?.['passwordMismatch']">
+                                Password doesn't match
+                            </span>
                         </div>
                         <div class="form-group">
                             <label>Date of Birth</label>
                             <input type="date" class="form-control" formControlName="dateOfBirth">
+                            <span class="text-danger" *ngIf="(registerForm.controls['dateOfBirth'].touched || submitted)&&registerForm.controls['dateOfBirth'].errors?.['required']">
+                                Date of Birth is Required
+                            </span>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success">Register</button>
+                            <button type="submit" class="btn btn-success" [disabled]="!registerForm.valid">Register</button>
                         </div>
                     </form>
                 </div>

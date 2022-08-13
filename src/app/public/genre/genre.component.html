@@ -1,23 +1,11 @@
-<div class="container" style="background-color:white;">
-    <div class="alert alert-primary" role="alert" *ngIf="flag">
-        Genre Deleted Successfully
-    </div>
-    <table class=table>
-        <thead>
-            <th scope="col">#</th>
-            <th scope="col">ID</th>
-            <th scope="col">NAME</th>
-            <th scope="col">Options</th>
-        </thead>
-        <tbody>
-            <tr *ngFor="let g of genres; index as i">
-                <th scope="row">{{i+1}}</th>
-                <td>{{g.id}}</td>
-                <td>{{g.name}}</td>
-                <td><input type="button" class="btn btn-link" value="Add" [routerLink]="'/Add-Genre'">
-                <input type="button" class="btn btn-link" value="Delete">
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="rounded">
+        <div class="container-fluid">
+            <div class="row" *ngFor="let movie of genreMovies.data">
+                    <div class="col-xl-2 col-lg-3 col-sm-4 col-6">
+                        <div class="card mb-4">
+                            <img src="{{movie.posterUrl}}" alt="{{movie.title}}" [routerLink]="['/Movie-Details/',movie.id]"/>
+                        </div>
+                    </div>
+            </div>
+        </div>
 </div>

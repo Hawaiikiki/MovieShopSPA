@@ -6,6 +6,7 @@ import { PurchasesComponent } from './purchases.component';
 import { FavoritesComponent } from './favorites.component';
 import { ReviewsComponent } from './reviews.component';
 import { EditProfileComponent } from './edit-profile.component';
+import { AuthGuard } from '../core/Guards/auth.guard';
 
 
 @NgModule({
@@ -18,6 +19,9 @@ import { EditProfileComponent } from './edit-profile.component';
   imports: [
     CommonModule,
     UserRoutingModule
+  ],
+  providers:[
+    AuthGuard
   ]
 })
 export class UserModule { }

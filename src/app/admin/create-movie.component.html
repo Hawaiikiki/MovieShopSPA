@@ -1,1 +1,32 @@
-<p>create-movie works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Create Movie</h3>
+                </div>
+                <div class="card-body">
+                    <form class="form" [formGroup]="createMovieForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                            <label>Movie Title</label>
+                            <input type="text" class="form-control" formControlName="title">
+                            <span class="text-danger" *ngIf="(createMovieForm.controls['title'].touched)&&createMovieForm.controls['title'].errors?.['required']">
+                                Title is Required
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label>PosterURL</label>
+                            <input type="text" class="form-control" formControlName="posterUrl">
+                            <span class="text-danger" *ngIf="(createMovieForm.controls['posterUrl'].touched)&&createMovieForm.controls['posterUrl'].errors?.['required']">
+                                Last name is Required
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success" [disabled]="!createMovieForm.valid">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

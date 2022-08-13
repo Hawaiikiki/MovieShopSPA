@@ -1,4 +1,187 @@
-<p>movie-details works!</p>
-<div>
-    <img src="{{movie.backdropUrl}}" alt="{{movie.title}}">
+<div style="background-image:url({{movie.backdropUrl}}); background-size: cover" class="background container-fluid">
+    <div class="row justify-content-center">
+        <div style="text-align: center" class="col">
+            <img src="{{movie.posterUrl}}">
+        </div>
+        <div class="col">
+            <div class="row">
+                <h1 style="margin-top:0.7em;">{{movie.title}}</h1>
+                <p style="font-size:0.9em; color:lightgrey;">{{movie.tagline}}</p>
+            </div>
+            <div class="row">
+                <div class="col" style="color:lightgrey;">
+                    {{movie.runTime}} m | {{movie.releaseDate| date:'yyyy'}}
+                </div>
+                <div class="col" *ngFor="let genre of movie.genres">
+                    <span class="badge rounded-pill bg-secondary">{{genre.name}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h4><span class="badge bg-success">N/A</span></h4>
+                </div>
+            </div>
+            <p>{{movie.overview}}</p>
+        </div>
+        <div class="col-3" style="margin-top :3em;margin-right:1em;">
+            <div class="row justify-content-center" style="margin-bottom:1em;" *ngIf="isLoggedIn; else reviewTemplate">
+                <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#review"><i
+                        class="far fa-edit"></i>&nbsp; REVIEW</button>
+            </div>
+            <ng-template #reviewTemplate>
+                <a class="btn btn-outline-light" [routerLink]="'/Account/Login'"><i
+                        class="far fa-edit"></i>&nbsp; REVIEW</a>
+            </ng-template>
+            <div class="row justify-content-center" style="margin-bottom:1em" *ngIf="isLoggedIn; else buyTemplate">
+                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#purchase">BUY
+                    ${{movie.price}}</button>
+            </div>
+            <ng-template #buyTemplate>
+                <a class="btn btn-light" [routerLink]="'/Account/Login'">BUY ${{movie.price}}</a>
+            </ng-template>
+        </div>
+    </div>
 </div>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-5">
+            <h4>MOVIE FACTS</h4>
+            <hr>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="far fa-calendar-alt"></i>&nbsp;Release Date &nbsp; <span
+                        class="badge rounded-pill bg-secondary">{{movie.releaseDate | date:'longDate'}}</span></li>
+                <li class="list-group-item"><i class="fas fa-hourglass-half"></i>&nbsp;Run Time &nbsp; <span
+                        class="badge rounded-pill bg-secondary">{{movie.runTime}} m</span> </li>
+                <li class="list-group-item"><i class="fas fa-money-bill"></i>&nbsp;Box Office &nbsp; <span
+                        class="badge rounded-pill bg-secondary">{{movie.revenue | currency}}</span></li>
+                <li class="list-group-item"><i class="fas fa-dollar-sign"></i>&nbsp;Budget &nbsp; <span
+                        class="badge rounded-pill bg-secondary">{{movie.budget | currency}}</span></li>
+            </ul>
+            <br>
+            <h4>TRAILERS</h4>
+            <hr />
+            <ul class="list-group list-group-flush" *ngFor="let trailer of movie.trailers">
+                <li class="list-group-item">
+                    <i class="fab fa-youtube"></i>&nbsp;<a href="{{trailer.trailerUrl}}">{{movie.title}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-7 cast-info">
+            <h4>CAST</h4>
+            <hr />
+            <ul class="list-group list-group-flush" *ngFor="let cast of movie.casts">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <a [routerLink]="['/Cast-Details/',cast.id]">
+                                <img style="border-radius:50%; height:3em;" src="{{cast.profilePath}}" alt="{{cast.name}}">
+                            </a>
+                        </div>
+                        <div class="col">
+                            {{cast.name}}
+                        </div>
+                        <div class="col">
+                            {{cast.character}}
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- @if (currentUser.isAuthenticated)
+{
+// need to check if we are updating or adding a review
+var review = await userService.GetReviewDetails(currentUser.UserId, Model.Id);
+var rating = review != null ? review.Rating : 1; // if review is null return 1, else return review.Rating
+var text = review != null ? review.ReviewText : "";
+var aspAction = review != null ? "UpdateReview" : "AddReview";
+var modalTitle = review != null ? "Update a review for " + @Model.Title : "Write a review for " + @Model.Title;
+
+<div class="modal fade" id="review" tabindex="-1" role="dialog" aria-labelledby="reviewLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">@modalTitle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="User" asp-action=@aspAction>
+                    <div>
+                        <div class="form-group">
+                            <input type="hidden" id="UserId" name="UserId" value="@currentUser.UserId" />
+                            <input type="hidden" id="MovieId" name="MovieId" value="@Model.Id">
+                        </div>
+                        <div class="form-group">
+                            <label for="rating">Rating:</label>
+                            <select class="custom-select" id="Rating" name="Rating">
+                                <option selected>@rating</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewText">Review:</label>
+                            <textarea class="form-control" rows="10" id="ReviewText" name="ReviewText">@text</textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        @if (review == null)
+                        {
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                        }
+                        else
+                        {
+                        <button type="submit" class="btn btn-primary">Update Review</button>
+                        <button type="submit" class="btn btn-primary" asp-controller="User"
+                            asp-action="DeleteReview">Delete Review</button>
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@if (currentUser.isAuthenticated)
+{
+<div class="modal fade" id="purchase" tabindex="-1" role="dialog" aria-labelledby="purchaseLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">Purchase</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Title of the movie:<b> @Model.Title</b></p>
+                <p>Price of the movie:<b> $@Model.Price</b></p>
+                <p>Would you like to buy this movie?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <form asp-controller="User" asp-action="BuyMovie" asp-route-userId="@currentUser.UserId">
+                    <div class="form-group">
+                        <input type="hidden" id="MovieId" name="MovieId" value="@Model.Id">
+                        <input type="hidden" id="TotalPrice" name="TotalPrice" value="@Model.Price">
+                        <input type="hidden" id="PurchaseDateTime" name="PurchaseDateTime" value="@DateTime.Now">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Purchase</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+} -->
