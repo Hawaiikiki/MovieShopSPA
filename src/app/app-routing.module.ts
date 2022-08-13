@@ -20,7 +20,7 @@ const routes: Routes = [
   {path:"Movie-Details/:movieId", component:MovieDetailsComponent},
   {path:"Cast-Details/:castId",component:CastDetailsComponent}, // above are loaded automatically
   {path:"Account",loadChildren: () => import("./account/account.module").then(mod=>mod.AccountModule)}, // below need authentication
-  {path:"Admin",loadChildren: () => import("./admin/admin.module").then(mod=>mod.AdminModule), canActivateChild:[AdminGuard]},
+  {path:"Admin",loadChildren: () => import("./admin/admin.module").then(mod=>mod.AdminModule), canLoad:[AdminGuard]},
   {path:"User",loadChildren: () => import("./user/user.module").then(mod=>mod.UserModule), canActivateChild:[AuthGuard]}
 ];
 // route-guard: interface + used to controll accessibility of routes

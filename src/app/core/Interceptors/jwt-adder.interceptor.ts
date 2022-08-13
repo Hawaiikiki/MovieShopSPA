@@ -24,7 +24,7 @@ export class JwtAdderInterceptor implements HttpInterceptor { // modify any Http
     if (this.isLoggedIn) {
       this.jwtToken = localStorage.getItem('token')!; // give null value if no token
       if (this.jwtToken != null) {
-        return next.handle(request.clone({ setHeaders: { Authorization: 'Bearer'+''+this.jwtToken } })); // this way we can stay authenticated in API
+        return next.handle(request.clone({ setHeaders: { Authorization: 'Bearer'+' '+this.jwtToken } })); // this way we can stay authenticated in API
       }
     }
     return next.handle(request);

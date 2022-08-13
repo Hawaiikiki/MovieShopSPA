@@ -22,6 +22,7 @@ export class AdminGuard implements CanLoad {
       this.isAdmin = data.isAdmin;
     });
     if ((localStorage.getItem('token') != null) && (this.isLoggedIn) && (this.isAdmin == "true")) {
+      console.log("true");
       return true;
     }
     else {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import{FormGroup,FormBuilder,Validators} from '@angular/forms';
-import { Movie } from '../shared/models/Movie';
 @Component({
   selector: 'app-create-movie',
   templateUrl: './create-movie.component.html',
